@@ -252,7 +252,7 @@ def notifyme_announce(text):
 
 
 pygame.init()
-notify_opportunities("You have 1 Padel opportunity!")
+notifyme_announce("You have 1 Padel opportunity!")
 pygame.quit()
 
 ```
