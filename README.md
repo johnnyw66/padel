@@ -2,7 +2,7 @@
 
 Fed up of missing that vital notification when waiting for Padel/Tennis or Swimming opportunities?
 
-Using a simple Python script - you can automate checking particular emails from Amazon and make announcements on your Echo Dot/Alexa Devices
+Using a simple Python script - you can automate checking particular emails from your sports provider and make announcements on your Echo Dot/Alexa Devices
 
 **Voice Monkey** and **Notify Me** are third-party skills that allows you to create and trigger customised Alexa routines and announcements. 
 
