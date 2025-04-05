@@ -19,8 +19,20 @@ I have given two example scripts here as demonstrations.  One for **Hove's Padel
 
 # secret.py
 
-Before following the instructions in this documentation - you need to produce a file called **secret.py** which will be used to save your credentials for various notification services such as **Voice Monkey**, **NotifyMe** and **MQTT**. Use the file **example_secret.py** as a template. Copy (or rename) **example_secret.py** to **secret.py** . Initially, your 'secrets' held in this file will be useless. At some point you will need to edit **secret.py** with valid credentials for your various services.
+Before following the instructions in this documentation - you need to install  **Docker** and/or **Python** onto your Operating system.
 
+Google 'Install Docker on ...(Linux/Mac/Windows 10/Windows11') and look at the latest HOWTO videos on YouTube. 
+
+**Coming soon** - you will find  details on how to run notification services using the Docker container (or Python)
+
+
+After installing these two major components you also need to produce a file called **secret.py** which will be used to save your credentials for various notification services such as **Voice Monkey**, **NotifyMe** and **MQTT**.
+
+Use the file **example_secret.py** as a template. Copy (or rename) **example_secret.py** to **secret.py** . Initially, your 'secrets' held in this file will be useless. At some point you will need to edit **secret.py** with valid credentials for your various services. 
+
+
+
+ Below are details on how to sign up for the two notication services.
 
 # Voicemonkey Alexa Skill - Dynamic Announcements Setup Guide
 
