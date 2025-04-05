@@ -1,0 +1,21 @@
+FROM python:3.11-slim
+
+# Set working directory
+WORKDIR /app
+
+# Copy Python scripts into the container
+COPY mqtt_swimming_burgesshill.py .
+
+# Install dependencies
+RUN pip install --no-cache-dir \
+    pytz \
+    requests \
+    beautifulsoup4 \
+    paho-mqtt==1.6.1
+
+
+#ENV PYTHONUNBUFFERED=1 
+
+# Run the script
+CMD ["python", "mqtt_swimming_burgesshill.py"]
+
