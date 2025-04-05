@@ -147,19 +147,43 @@ def build_statement():
 
 
 
+
+# Define callback functions
 def on_connect(client, userdata, flags, rc):
-    print("Connected to MQTT Broker")
-    client.subscribe(MQTT_TOPIC_REQUEST)
+    if rc == 0:
+        print("Connected to MQTT Broker!")
+        client.subscribe(MQTT_TOPIC_REQUEST)
+    else:
+        print(f"Failed to connect, return code {rc}")
 
 def on_message(client, userdata, msg):
     print(f"Received request: {msg.topic} -> {msg.payload.decode()}")
 
-    # Generate the statement when a request is received
+    # Generate the 'availability' statement when a request is received
     availability_statement = build_statement()
 
     # Publish the statement to the response topic
     client.publish(MQTT_TOPIC_RESPONSE, availability_statement)
     print(f"Sent response: {availability_statement}")
+
+# Function to handle reconnecting to the MQTT broker
+def connect_with_retries(client, retries=5, delay=5):
+    """Connect to the broker with retries and exponential backoff."""
+    attempt = 0
+    while attempt < retries:
+        try:
+            client.connect(MQTT_BROKER, MQTT_PORT, 60)
+            print(f"Connected to MQTT Broker on attempt {attempt + 1}")
+            return True
+        except Exception as e:
+            print(f"Connection attempt {attempt + 1} failed: {e}")
+            time.sleep(delay)
+            attempt += 1
+    print("Failed to connect to MQTT broker after multiple attempts.")
+    return False
+
+
+
 
 
 # Set up the MQTT client
@@ -168,11 +192,19 @@ client.on_connect = on_connect
 client.on_message = on_message
 client.username_pw_set(MQTT_USERNAME, MQTT_PASSWORD)
 
-# Connect to the broker
-client.connect(MQTT_BROKER, MQTT_PORT, 60)
 
-# Start the loop to listen for messages
-client.loop_forever()
+# Try to connect to the MQTT broker
+if not connect_with_retries(client):
+    print("Unable to connect to the MQTT broker. Exiting.")
+    exit(1)
 
-#msg = build_statement()
-#print(msg)
+# Start the loop to listen for messages with error handling
+try:
+    client.loop_forever()
+except KeyboardInterrupt:
+    print("Loop interrupted, closing connection.")
+    client.disconnect()
+except Exception as e:
+    print(f"Unexpected error occurred: {e}")
+    client.disconnect()
+
