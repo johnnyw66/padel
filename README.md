@@ -8,7 +8,7 @@ Using a simple Python script - you can automate checking particular emails and/o
 
 Essentially these skills and their associated webservices acts as a bridge between your devices, services, or apps and Alexa's ecosystem. 
 
-When enabled you can easily make your Alexa devices announce specific messages. For example, you can send a message to Alexa to say "You have Padel Opportunities." on all Echo devices in your home.
+When enabled you can easily make your Alexa devices announce specific messages. For example, you can send a message to Alexa to say "There are Padel Opportunities today at 10:30 AM" on all Echo devices in your home.
 
 **Please Note:**
 
