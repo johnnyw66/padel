@@ -231,7 +231,7 @@ import pygame
 import io
 import tempfile
 
-def notifyme_announce(text):
+def notify_opportunities(text):
     # Create a gTTS object and get the speech as an in-memory stream
     tts = gTTS(text)
     speech_stream = io.BytesIO()
@@ -252,7 +252,7 @@ def notifyme_announce(text):
 
 
 pygame.init()
-notifyme_announce("You have 1 Padel opportunity!")
+notify_opportunities("You have 1 Padel opportunity!")
 pygame.quit()
 
 ```
