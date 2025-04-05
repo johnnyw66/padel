@@ -98,7 +98,7 @@ if __name__ == "__main__":
     # Time range: April 16, 2025, from 08:00 to 22:00 (UTC+1)
     tz = timezone(timedelta(hours=1))
     month = 4
-    day = 7
+    day = 5
     start_dt = datetime(2025, month, day, 8, 0, 0, tzinfo=tz)
     end_dt = datetime(2025, month, day, 22, 0, 0, tzinfo=tz)
 
