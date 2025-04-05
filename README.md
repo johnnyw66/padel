@@ -183,13 +183,13 @@ else:
 
 Altenatively, read the document **Amazon-Alexa-Access-Code-Guide.pdf** found in the docs folder (courtesey of Protesus.com). This gives instructions on how to set up notifications on your alexa devices.
 
-Make sure you copy your notificatoins token into your **configure.py** file.
+Make sure you copy your notificatoins token into your **secret.py** file.
 
 Run the test script **testnotify.py** from the command console. 
 
 **python3 testnotify.py**
 
-If you've registered your skill correctly and copied your token into configure.py - you should get a notification on your Alexa device(s).
+If you've registered your skill correctly and copied your token into secret.py - you should get a notification on your Alexa device(s).
 
 As per instructions in the protesus documents -
 
