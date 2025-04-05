@@ -1,0 +1,17 @@
+# Use an official Python base image
+FROM python:3.11-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy your Python files into the container (note secret.py mounted at runtime)
+COPY testspeak.py .
+
+# Install dependencies
+RUN pip install --no-cache-dir \
+    pygame \
+    gtts
+
+# Run the main script
+CMD ["python", "testspeak.py"]
+
