@@ -2,13 +2,21 @@
 
 Fed up of missing that vital notification when waiting for Padel/Tennis or Swimming opportunities?
 
-Using a simple Python script - you can automate checking particular emails from your sports provider and make announcements on your Echo Dot/Alexa Devices
+Using a simple Python script - you can automate checking particular emails and/or checking websites from your sports provider and make announcements on your Echo Dot/Alexa Devices
 
 **Voice Monkey** and **Notify Me** are third-party skills that allows you to create and trigger customised Alexa routines and announcements. 
 
 Essentially these skills and their associated webservices acts as a bridge between your devices, services, or apps and Alexa's ecosystem. 
 
 When enabled you can easily make your Alexa devices announce specific messages. For example, you can send a message to Alexa to say "You have Padel Opportunities." on all Echo devices in your home.
+
+**Please Note:**
+
+Announcements using an Alexa skills is only one part of the automation process when checking facilities on your local sports centre's website. You will also need additional scripts (written in Python or Javascript).
+to check out those sporting opportunities that match your requirement are available. 
+
+I have given two example scripts here as demonstrations.  One for **Hove's Padel and Tennis** website and the other for **Burgess Hill Triangle Sports Complex**.
+
 
 
 # Voicemonkey Alexa Skill - Dynamic Announcements Setup Guide
@@ -243,7 +251,7 @@ pygame.quit()
 
 
 # Padel 
-Padel Bat Hove Website watcher. Example source
+Padel Bat Hove Website watcher. Example source  - **WATCH THIS SPACE FOR UPDATES**
 ```
 python3 padel.py
 ```
