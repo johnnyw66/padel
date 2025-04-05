@@ -89,28 +89,26 @@ Voice Monkey allows you to send announcements or trigger routines via HTTP reque
 2. **Use the API**:  
    You can make HTTP requests to trigger monkeys or send announcements to Alexa devices. Here's an example using `httpx` in Python:
 
-   ```python
-   import httpx
-
-   api_key = "your_api_key"
-   access_token = "your_access_token"
-   monkey_name = "Announce Dinner"
-
-   response = httpx.get(
-       "https://api.voicemonkey.io/trigger",
-       params={
-           "key": api_key,
-           "token": access_token,
-           "monkey": monkey_name
-       }
-   )
-
-   if response.status_code == 200:
-       print("Announcement triggered successfully!")
-   else:
-       print("Error:", response.text)
+```python
+import httpx
+import secret
 
 
+url = "https://api-v2.voicemonkey.io/announcement"
+
+vm_payload = {
+                "token": secret.VOICEMONKEY_TOKEN,    # Given to you when you set up VoiceMonkey account.
+                "device": secret.VOICEMONKEY_DEVICE,   # Make sure this is set up with one of your valid device aliases that in your voice monkey account.
+                "text": "WELL DONE! YOUR VOICEMONKEY IS WORKING!!"
+}
+
+response = httpx.get(url, params = vm_payload)
+if response.status_code == 200:
+    print("Announcement triggered successfully!")
+else:
+    print("Error:", response.text)
+    
+```
 ## NotifyMe Alexa Skill - Static Notifications Setup Guide
 
 
@@ -160,23 +158,21 @@ curl -X POST https://api.notifymyecho.com/v1/NotifyMe \
 ```python
 
 import httpx
+import secret
 
-api_url = "https://api.notifymyecho.com/v1/NotifyMe"
-api_key = "your_api_key"
-message = "This is a test notification from NotifyMe."
+url = "https://api.notifymyecho.com/v1/NotifyMe"
+vm_payload = {
+            "accessCode": secret.NOTIFICATIONS_TOKEN,
+            "notification": "WELL DONE! YOUR NOTIFICATION IS WORKING!!"
+		}
+response = httpx.post(url, params = vm_payload) #headers = headers)
 
-response = httpx.post(
-    api_url,
-    json={
-        "notification": message,
-        "accessCode": api_key
-    }
-)
+print(response.status_code)
 
-if response.status_code == 200:
-    print("Notification sent successfully!")
+if response.status_code != 401:
+  print("Response Code:",response.status_code, "Notification triggered successfully!")
 else:
-    print(f"Error: {response.status_code} - {response.text}")
+  print("Error:", response.text)
 
 ```
 
