@@ -17,6 +17,9 @@ to check out those sporting opportunities that match your requirement are availa
 
 I have given two example scripts here as demonstrations.  One for **Hove's Padel and Tennis** website and the other for **Burgess Hill Triangle Sports Complex**.
 
+# secret.py
+
+Before following the instructions in this documentation - you need to produce a file called **secret.py** which will be used to save your credentials for various notification services such as **Voice Monkey**, **NotifyMe** and **MQTT**. Use the file **example_secret.py** as a template. Copy (or rename) **example_secret.py** to **secret.py** . Initially, your 'secrets' held in this file will be useless. At some point you will need to edit **secret.py** with valid credentials for your various services.
 
 
 # Voicemonkey Alexa Skill - Dynamic Announcements Setup Guide
@@ -253,9 +256,9 @@ python3 padel.py
 ```
 
 # Triangle Burgess Hill.
-Mqtt watcher - (need to populate secret.py with credentials)
+Mqtt watcher - (Do not forget to populate secret.py with proper credentials)
 ```
-
+# Example secret.py
 # MQTT Credentials (replace with your credentials)
 MQTT_BROKER = "109-120-108-53.ip.linodeusercontent.com"  # MQTT Broker address (change to your broker if necessary)
 MQTT_USERNAME = "YOUR MQTT USERNAME HERE"
