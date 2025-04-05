@@ -1,3 +1,4 @@
+import pytz
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -57,6 +58,10 @@ def check_availability(activity_id, location_id, start_datetime_iso):
 
 
 def build_statement():
+
+    UK_TIMEZONE = pytz.timezone('Europe/London')
+    today = datetime.now(UK_TIMEZONE).date()  # Get the current date in UK timezone
+
     url = 'https://www.placesleisure.org/centres/the-triangle/centre-activities/swimming-lessons/#timetable'
     headers = {
         'User-Agent': 'Mozilla/5.0'
@@ -67,7 +72,6 @@ def build_statement():
 
     input_elem = soup.find('input', {'id': 'timetable-data'})
 
-    today = datetime.now(timezone.utc).date()
 
 
     if input_elem:
@@ -86,9 +90,8 @@ def build_statement():
             swimming_sessions = timetable_data["timetables"][0]["sessions"]
 
 	        # Filter for SWIMLANE activities in the Main Pool
-            lane_swims = [ session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool"]
-
-            lane_swims_today = [session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool" and datetime.fromisoformat(session["s"].replace("Z", "+00:00")).date() == today]
+            #lane_swims = [ session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool"]
+            #lane_swims_today = [session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool" and datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE).date() == today]
 
             # You have 40 minutes to travel, and need 30 minutes to swim
             travel_time = timedelta(minutes=TRAVEL_TIME)
@@ -103,8 +106,8 @@ def build_statement():
 
             for session in lane_swims:
                 # Convert session start and end times to datetime objects
-                start = datetime.fromisoformat(session["s"].replace("Z", "+00:00"))
-                end = datetime.fromisoformat(session["e"].replace("Z", "+00:00"))
+                start = datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+                end = datetime.fromisoformat(session["e"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
 
                 # Ensure session starts at least 40 minutes from now
                 if start >= now + travel_time and end - start >= minimum_swim_time:
@@ -118,8 +121,8 @@ def build_statement():
             statement.append("Today at the Burgess Hill swimming lane pool, ")
             # Show the next two valid sessions
             for session_num, session in enumerate(next_sessions):
-                start = datetime.fromisoformat(session["s"].replace("Z", "+00:00"))
-                end = datetime.fromisoformat(session["e"].replace("Z", "+00:00"))
+                start = datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+                end = datetime.fromisoformat(session["e"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
                 info = check_availability(session["aId"], session["al"], session["s"])
                 print(f"{start:%Y-%m-%d %H:%M}–{end:%H:%M} @ {session['lc']} ({session['ag']}) "
                       f"– {info['availability']} places remaining, Status: {info['status']}")

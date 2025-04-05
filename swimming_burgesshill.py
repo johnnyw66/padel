@@ -1,3 +1,4 @@
+import pytz
 import requests
 from bs4 import BeautifulSoup
 import json
@@ -53,8 +54,11 @@ soup = BeautifulSoup(response.text, 'html.parser')
 
 input_elem = soup.find('input', {'id': 'timetable-data'})
 
-today = datetime.now(timezone.utc).date()
+UK_TIMEZONE = pytz.timezone('Europe/London')
 
+#today = datetime.now(timezone.utc).date()
+today = datetime.now(UK_TIMEZONE).date()  # Get the current date in UK timezone
+print("TODAY ", today)
 
 if input_elem:
     raw_value = input_elem.get('value', '')
@@ -73,13 +77,16 @@ if input_elem:
 
 	    # Filter for SWIMLANE activities in the Main Pool
         lane_swims = [ session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool"]
+        lane_swims_today = [session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool" and datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE).date() == today]
 
-        lane_swims_today = [session for session in swimming_sessions if session["ag"] == "SWIMLANE" and session["lc"] == "Main Pool" and datetime.fromisoformat(session["s"].replace("Z", "+00:00")).date() == today]
         statement = []
 	    # Pretty print
         for session in lane_swims_today:
-            start = datetime.fromisoformat(session["s"].replace("Z", "+00:00"))
-            end = datetime.fromisoformat(session["e"].replace("Z", "+00:00"))
+            #start = datetime.fromisoformat(session["s"].replace("Z", "+00:00"))
+            #end = datetime.fromisoformat(session["e"].replace("Z", "+00:00"))
+            start = datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+            end = datetime.fromisoformat(session["e"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+
             info = check_availability(session["aId"], session["al"], session["s"])
             print(f"{start:%H:%M}–{end:%H:%M} @ {session['lc']} ({session['ag']}) – Places Remaining: {info['availability']}")
             alexa_statement = ' '.join(statement)      
@@ -100,8 +107,8 @@ if input_elem:
 
         for session in lane_swims:
             # Convert session start and end times to datetime objects
-            start = datetime.fromisoformat(session["s"].replace("Z", "+00:00"))
-            end = datetime.fromisoformat(session["e"].replace("Z", "+00:00"))
+            start = datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+            end = datetime.fromisoformat(session["e"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
 
             # Ensure session starts at least 40 minutes from now
             if start >= now + travel_time and end - start >= minimum_swim_time:
@@ -115,8 +122,10 @@ if input_elem:
         statement.append("Today at the Burgess Hill swimming lane pool, ")
         # Show the next two valid sessions
         for session_num, session in enumerate(next_two_sessions):
-            start = datetime.fromisoformat(session["s"].replace("Z", "+00:00"))
-            end = datetime.fromisoformat(session["e"].replace("Z", "+00:00"))
+
+            start = datetime.fromisoformat(session["s"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+            end = datetime.fromisoformat(session["e"].replace("Z", "+00:00")).astimezone(UK_TIMEZONE)
+
             info = check_availability(session["aId"], session["al"], session["s"])
             print(f"{start:%Y-%m-%d %H:%M}–{end:%H:%M} @ {session['lc']} ({session['ag']}) "
                   f"– {info['availability']} places remaining, Status: {info['status']}")
