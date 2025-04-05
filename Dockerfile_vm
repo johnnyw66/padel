@@ -1,0 +1,15 @@
+# Use an official Python base image
+FROM python:3.11-slim
+
+# Set working directory inside container
+WORKDIR /app
+
+# Copy your Python files into the container (note secret.py mounted at runtime)
+COPY testmonkey.py .
+
+# Install httpx
+RUN pip install --no-cache-dir httpx
+
+# Run the main script
+CMD ["python", "testmonkey.py"]
+
