@@ -120,7 +120,7 @@ The NotifyMe Alexa skill allows you to send notifications directly to your Alexa
 
 ## 1. Enable the NotifyMe Skill
 1. **Open the Alexa App**:  
-   On your smartphone or desktop, open the Amazon Alexa app or visit the [Alexa Skills page](https://alexa.amazon.com).
+   On your smartphone or desktop, open the Amazon Alexa app or visit the [Alexa Skills page](https://alexa.amazon.co.uk).
 
 2. **Search for the NotifyMe Skill**:  
    In the Alexa app, navigate to "Skills & Games" and search for "NotifyMe."
